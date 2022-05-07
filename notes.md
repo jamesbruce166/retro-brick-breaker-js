@@ -1,0 +1,105 @@
+# Notes & Planning
+
+## Planning
+
+Controls:
+
+-   right, left = movement
+-   down = rotate counterclockwise
+-   up = rotate clockwise
+-   space = hard drop
+-   p = pause the game
+
+Notes:
+
+-   Grid is 10x40... rows above 20 are hidden or obstructed
+-   Colours are:
+    -   Cyan = line
+    -   Yellow = square
+    -   Purple = T shape
+    -   Green = S shape
+    -   Red = Z shape
+    -   Blue = J (backwards L) shape
+    -   Orange = L (backwards J) shape
+-   Different start locations
+    -   I & O = middle
+    -   The rest = left-middle
+-   Shapes spawn horizontally with J, L, and T spawning flat side first
+-   Super Rotation System/Standard Rotation System (SRS) specifies tetrimino rotation
+-   So-called 7-bag Random Generator (also called "random bag" or "7 system")
+
+Shapes:
+
+I = 4 blocks
+L, J = 3 then 1 block
+T = 3 then 1 middle block
+Z, S = 2 and 2 diagonally
+O = 2x2 block ]
+
+Grid System:
+
+1:2 ratio. 10 blocks on the X axis, 20 blocks on the Y axis, 20 virtual blocks above the visible Y axis
+Top left - 0, 0
+
+X axis = 0 -> +10
+Y axis = 0 -> -20
+Virtual Y axis = 0 -> +20
+
+-   Represent this as a 2D array of 0's and 1's... 1 being to draw, 0 being empty space
+-   Shapes/tetriminoes can be represented as hex values in a 4x4 block based on the SRP
+
+e.g.
+
+Each array of values represent 1 horizontal row in the 4x4 grid
+[See here](https://tetris.fandom.com/wiki/SRS?file=SRS-pieces.png#Basic_Rotation)
+
+```js
+const I = [
+	[0x0, 0xf, 0x0, 0x0], // 0
+	[0x2, 0x2, 0x2, 0x2], // 90
+	[0x0, 0x0, 0xf, 0x0], // 180
+	[0x4, 0x4, 0x4, 0x4], // 270
+];
+
+const J = [
+	[0x8, 0xe, 0x0, 0x0],
+	[0x6, 0x4, 0x4, 0x0],
+	[0x0, 0xe, 0x2, 0x0],
+	[0x4, 0x4, 0xc, 0x0],
+];
+
+const L = [
+	[0x2, 0xe, 0x0, 0x0],
+	[0x4, 0x4, 0x6, 0x0],
+	[0x0, 0xe, 0x8, 0x0],
+	[0xc, 0x4, 0x4, 0x0],
+];
+
+const O = [
+	[0x6, 0x6, 0x0, 0x0],
+	[0x6, 0x6, 0x0, 0x0],
+	[0x6, 0x6, 0x0, 0x0],
+	[0x6, 0x6, 0x0, 0x0],
+];
+
+const S = [
+	[0x6, 0xc, 0x0, 0x0],
+	[0x4, 0x6, 0x2, 0x0],
+	[0x0, 0x6, 0xc, 0x0],
+	[0x8, 0xc, 0x4, 0x0],
+];
+
+const T = [
+	[0x4, 0xe, 0x0, 0x0],
+	[0x4, 0x6, 0x4, 0x0],
+	[0x0, 0xe, 0x4, 0x0],
+	[0x4, 0xc, 0x4, 0x0],
+];
+
+const Z = [
+	[0xc, 0x6, 0x0, 0x0],
+	[0x2, 0x6, 0x4, 0x0],
+	[0x0, 0xc, 0x6, 0x0],
+	[0x4, 0xc, 0x8, 0x0],
+];
+```
